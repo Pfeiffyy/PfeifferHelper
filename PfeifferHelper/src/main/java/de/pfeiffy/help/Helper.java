@@ -171,6 +171,35 @@ public class Helper {
 		return outFile;
 	}
 
+	// -------------------------------------------------------
+	public static File dateienInDatei(String[] inFiles, String outFile) {
+		// --------------------------------------------------------
+		BufferedReader f;
+		String line;
+
+		for (String datei : inFiles) {
+
+			try {
+				f = new BufferedReader(new FileReader(datei));
+				while ((line = f.readLine()) != null) {
+
+					Helper.s(line);
+
+
+					// nun wird wieder weggeschrieben
+					schreiben(line, outFile, true);
+
+				}
+				f.close();
+
+			} catch (IOException e) {
+				System.out.println("Fehler beim Lesen der Datei");
+			}
+		}
+
+		return new File(outFile);
+	}
+
 	// ----------------------------------
 	public static void schreiben(String sLine, File outputFile, boolean anhaengen) {
 		// ----------------------------------
