@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.Timestamp;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Helper {
 
@@ -185,7 +187,6 @@ public class Helper {
 
 					Helper.s(line);
 
-
 					// nun wird wieder weggeschrieben
 					schreiben(line, outFile, true);
 
@@ -260,6 +261,19 @@ public class Helper {
 	}
 
 	// ----------------------------------------------------------------
+	public static String[] ArrayList2StringList(ArrayList arrayList) {
+		// ----------------------------------------------------------------
+
+		String[] outStringList = new String[arrayList.size()];
+		for (int x = 0; x < arrayList.size(); x++) {
+			outStringList[x] = (String) arrayList.get(x);
+
+		}
+
+		return outStringList;
+	}
+
+	// ----------------------------------------------------------------
 	public static Map<String, String> file2MapKey(String filename, int key, int value) {
 		// ----------------------------------------------------------------
 		BufferedReader f;
@@ -310,6 +324,27 @@ public class Helper {
 
 		return "\"" + ret + "\"";
 
+	}
+
+	public static ArrayList<String> getVerzeichnisliste(String Verzeichnis, String endung) {
+		File userdir = new File(Verzeichnis);
+		ArrayList<String> Dateiliste = new ArrayList<String>();
+		for (String entry : userdir.list(new TxtFilenameFilter(endung))) {
+			Dateiliste.add(Verzeichnis + "/" + entry);
+		}
+		return Dateiliste;
+	}
+
+	static class TxtFilenameFilter implements FilenameFilter {
+		String endung;
+
+		public TxtFilenameFilter(String endung) {
+			this.endung = endung;
+		}
+
+		public boolean accept(File f, String s) {
+			return s.toLowerCase().endsWith("." + endung);
+		}
 	}
 
 }
