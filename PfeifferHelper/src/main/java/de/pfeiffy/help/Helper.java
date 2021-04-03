@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class Helper {
 
 	public static int gebezeilenAnzahl(File inFile) {
@@ -299,6 +298,37 @@ public class Helper {
 		}
 
 		return map;
+	}
+
+	// ----------------------------------------------------------------
+	public static String file2String(String fileName) {
+	// ----------------------------------------------------------------
+		FileReader fr = null;
+		StringBuffer sb = new StringBuffer();
+
+		try {
+			fr = new FileReader(fileName);
+
+			int ch;
+			while ((ch = fr.read()) != -1)
+				sb.append((char) ch);
+
+			System.out.println(sb.toString());
+		}
+		/*
+		 * catch(FileNotFoundException ex) { System.out.println(ex); }
+		 */
+		catch (IOException ex) {
+			System.out.println(ex);
+		} finally {
+			try {
+				if (fr != null)
+					fr.close();
+			} catch (Exception ex) {
+			}
+		}
+		return sb.toString();
+
 	}
 
 	public static String getName(int x) {
